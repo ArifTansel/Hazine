@@ -1,8 +1,7 @@
 
 Group by olmadan kullanılırsa tüm verileri yan yana yazar 
 
-```sql
+```sql title:'tüm passwordleri yan yana yazar' 
 SELECT GROUP_CONCAT(password) FROM users;
 ```
 
-tüm passwordleri yan yana yazar 

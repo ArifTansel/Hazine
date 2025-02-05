@@ -1,0 +1,1 @@
+https://www.invicti.com/blog/web-security/php-stream-wrappers/

@@ -1,5 +1,8 @@
 [[SQLİ]]
 
+Veri tabanı hakkında bilgiler içerir.
+Veri tabanında hangi tablolar bu tabloların column nameleri ile ilgili bilgiler almak için kullan. 
+
 Oracle : 
 --
 | ALL_TABLES   | Type            | Desc.             |
