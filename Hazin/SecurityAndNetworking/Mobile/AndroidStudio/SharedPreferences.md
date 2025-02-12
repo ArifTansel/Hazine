@@ -1,6 +1,7 @@
 > [!NOTE]
 > 
 > **Caution:** `DataStore` is a modern data storage solution that you should use instead of `SharedPreferences`.
+> 
 
 ```kotlin
 val sharedPref = getSharedPreferences("user_pref", Context.MODE_PRIVATE)  

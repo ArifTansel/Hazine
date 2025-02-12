@@ -20,3 +20,11 @@ HTTP isteğinde yazan her yer birer parametredir ve değiştirilebilir.
 - Hackerone.com bug bounty 
 
 - android studio indir ve basit bir app yaz 
+
+
+## Other
+
+.APK signature nedir araştrır 
+haftanın konusu information disclosure
+URL fuzzing
+fuzzing 

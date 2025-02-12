@@ -30,3 +30,6 @@ androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version
 şeklinde yazılır.
 
 
+#### `$HOME/.android/debug.keystore` 
+
+Android Studioda projeyi debug ederken `$HOME/.android/debug.keystore` adresine bir debugkeystore ve bir sertifika oluşturur ve keystore ve key password oluşturur.

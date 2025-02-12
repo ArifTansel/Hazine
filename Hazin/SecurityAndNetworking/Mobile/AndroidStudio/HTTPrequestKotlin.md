@@ -15,7 +15,9 @@ val request = Request.Builder()
 val response = client.newCall(request).execute()
 ```
 
-
-
 Bu şekilde response alınabilir response bir json ise bunu şu şekilde parse edebiliriz
 
+
+
+> [!NOTE] Title
+> HTTP isteği gönderirken mainthread de olmamalı olursa `NetworkOnMainThreadException` hatası alıyorsun.

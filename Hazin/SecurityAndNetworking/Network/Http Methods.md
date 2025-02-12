@@ -39,6 +39,18 @@ Delete metodu serverdaki Request-URI üzerindeki bir kaynağı silmesini ister.
 * TRACE : 
 TRACE yöntemi, bir HTTP isteğinin uzaktaki uygulama katmanı boyunca nasıl işlendiğini test etmek ve teşhis etmek için kullanılır. Bu yöntem, istemcinin, isteğin karşı uçta (sunucu veya bir ara proxy) nasıl alındığını görmesine olanak tanır.
 
+```python
+@app.route("/", methods=["GET", "POST","TRACE"])
+def login():
+    # İstek başlıklarını ve içeriğini geri döndürür
+    headers = ""
+    for header, value in request.headers.items():
+        headers += f"{header}: {value}\n"
+    body = request.get_data(as_text=True)
+    response_body = f"{request.method} {request.path} HTTP/1.1\n{headers}\n{body}"
+```
+
+
 > [!NOTE]
 > 1. **İstek Yansıması:**
 >     
