@@ -16,3 +16,8 @@ Apk seçildikten sonra key oluşturması istenir :
 
 ![[Pasted image 20250211150714.png|300]]
 şifre oluşturulur ve key ile imzalanmış bir apk oluşturabilirsin.
+Nasıl çalışır ne işe yarar
+- **APK'nin Hash Hesaplaması:** APK'nin her bileşeninin hash'i alınır.
+- **Özel Anahtar ile İmzalama:** Bu hash, geliştiricinin özel anahtarı ile imzalanır.
+- **Sertifika Eklenmesi:** APK'ye geliştiricinin genel anahtarını içeren bir sertifika eklenir.
+- **Doğrulama:** Android, bu genel anahtarı kullanarak APK'nin bütünlüğünü doğrular.

@@ -65,3 +65,4 @@ class ViewModel(
 - `launch` coroutine oluşturan bir fonksiyondur.
 - `Dispatchers.IO` indicates that this coroutine should be executed on a thread reserved for I/O operations.
 
+**Dispatcher**, genellikle **çoklu iş parçacığı (multi-threading)** veya **olay tabanlı sistemlerde** görevlerin veya olayların yönetilmesini sağlayan bir bileşendir. Kullanım alanına göre farklı türleri bulunur:
