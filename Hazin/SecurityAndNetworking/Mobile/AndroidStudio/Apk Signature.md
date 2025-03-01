@@ -21,3 +21,10 @@ Nasıl çalışır ne işe yarar
 - **Özel Anahtar ile İmzalama:** Bu hash, geliştiricinin özel anahtarı ile imzalanır.
 - **Sertifika Eklenmesi:** APK'ye geliştiricinin genel anahtarını içeren bir sertifika eklenir.
 - **Doğrulama:** Android, bu genel anahtarı kullanarak APK'nin bütünlüğünü doğrular.
+
+[[Keystore]], kısmında anlatılan şekilde keyler oluşturulduktan sonra:
+
+APK dosyasını Imzalama
+``` title=".apk imzalamak (apksigner) "
+apksigner sign --ks mykeystore.jks --ks-key-alias alias_name yeni_uygulama.apk
+```

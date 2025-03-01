@@ -6,3 +6,5 @@ MainActivity
 ![[Pasted image 20250222115818.png]]
 
 kodların javaya değiştirilmiş hali bulunur bu yüzden soyutlanmış olan kodlar da gözüküyor okuması daha zor.
+
+Smali kodları bulunmaz bu yüzden değiştirererk tekrar build edemezsin değiştirip build almak için [[ApkTool]] kullanmalısın
