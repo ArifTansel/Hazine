@@ -31,3 +31,17 @@ flagi kullanılmalıdır
 - -recursion-depth : ne kadar derine ineceği 
 - -rate : per rate 
 - -timeout
+
+
+### Brute force fuzzing
+
+
+```bash
+ffuf -w /path/to/postdata.txt -X POST -d "username=admin\&password=FUZZ" -u https://target/login.php -fc 401
+```
+
+- `-fc `: Filter From **status code
+-  `-fl` : Filter From **lines
+- `-fr` : Filter with **regex
+- `-fs` : Filter from **size**
+- `-fw`: Filter from **amount of words**
