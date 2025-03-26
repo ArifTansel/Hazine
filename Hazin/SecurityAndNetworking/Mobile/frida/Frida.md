@@ -8,8 +8,6 @@ Senaryolar:
 - Bir uygulama çıkardığını düşün bu uygulama'da bir hata oluştuğunu ve verilen logların buna yeterli olmadığını düşün. Normalde logların verildiği yeni bir script yazıp tekrar build almak gerekir ancak bu uzun sürecek bir süreç olacaktır bu yüzden **Frida** kullanarak fonksiyonuna birkaç satır kod iliştirerek logların tekrar build almadan alınabilmesini sağlayabilirisn.
 - Intercept packets
 
-
-
 Rootlu bir cihaz gerekir.
 
 rootlu emülatörde AOSP şeklinde detay vardır.
