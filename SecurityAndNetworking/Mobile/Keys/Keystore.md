@@ -1,4 +1,4 @@
-Bir keystore dosyasında **birden fazla anahtar çifti olabilir**, bu yüzden her bir anahtara erişebilmek için bir **alias (takma ad)** kullanılır.
+	Bir keystore dosyasında **birden fazla anahtar çifti olabilir**, bu yüzden her bir anahtara erişebilmek için bir **alias (takma ad)** kullanılır.
 
 **APK imzalama sırasında**, keystore içinde geçerli bir **alias** belirtmeniz gerekir.
 
