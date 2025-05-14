@@ -17,14 +17,9 @@ payload'ı ile username i bulabilirsin sonrasında yine aynı payload ile şifre
 
 diğer hesaba girerken `/login2` endpointinde `2fa` kontrol ediyor doğruysa  beni `/my-account?id=wiener` e yönlediriyor  login2 kısmına girdikten sonrasında direk `/my-account?id=carlos` girersem bypass ediyorum
 
-
 # Lab3 (Pass Reset)
 
-
-
 Pass reset yaparken kullanıcı idsini alıyor 
-
-
 # Lab4 ()
 
 ```bash
