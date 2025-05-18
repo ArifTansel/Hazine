@@ -57,4 +57,5 @@ Servera bu jwt'yi bu public key üzerinden doğrulamasını söyler.
 #### Example jwk usage
 
 Google hesabıyla giriş yapılabilecek bir sistemin var diyelim.
-
+jwk genel olarak kimlik sağlayıcılarının kullanabilmesi için kurgulanmış bir sistem. 
+Kimlik sğlayıcıdan doğrulaması gerekirken injecte edilmiş `jwk` içerisinde doğrulama yapılıyorsa bu sefer saldırgan tarafından gelen jwk headerına güvenebilir.

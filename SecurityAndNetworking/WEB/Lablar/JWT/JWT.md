@@ -50,3 +50,33 @@ Burpde :
 
 
 ## LAB 4 
+
+
+
+## LAB 7 :
+
+genel saldırı yöntemi algorithm confussion yöntemidir. Bu yöntemle RS256 nın **public keyi** alınarak HS256 nın **shared key** i olarak kullanılır.
+
+`/jwks.json` içerisinde sunucunun kullandığı RS256 için olan **public key** bulunur.
+
+Bir RSA key oluştur ve oraya verilen endpointten çıkan key i yapıştır. Bu sayede **public key** alınmış olur.
+
+PEM olarak kopyala çünkü sunucu key yapısını pem olarak kullanıyor.
+
+bu public keyden bir symetric key oluşturulur.
+![[Pasted image 20250517113310.png]]
+bulunan `k` değerini verilen public key ile değiştir ve oluşan anahtarla şifrele
+![[Pasted image 20250517113321.png]]
+sonra aynı işlemler.
+
+## LAB 8 
+
+Bu sefer bize public key i vermemiş iki kere login olup oluşan cookielerden **public keyleri** çıkarmamız gerekiyor. 
+
+```powershell
+docker run --rm -it portswigger/sig2n <token1> <token2>
+```
+bu şekilde public key çıkarılmış olur.
+
+Aynı işlemler tekrarlanarak symetric key çıkarılır bu şekilde sign ederek admin paneline ulaşılabliir.
+
