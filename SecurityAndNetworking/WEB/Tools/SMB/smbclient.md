@@ -8,4 +8,4 @@ Prints the program version number.
 Username 
 
 
-[[SMB(Server Message Block)]]
+[[SecurityAndNetworking/WEB/Tools/SMB/SMB(Server Message Block)]]

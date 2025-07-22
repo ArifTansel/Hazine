@@ -8,4 +8,4 @@ smbget — wget-like utility for download files over SMB
 ```bash
 smbget -R smb://<ip>/BillySMB
 ```
-[[SMB(Server Message Block)]]
+[[SecurityAndNetworking/WEB/Tools/SMB/SMB(Server Message Block)]]
