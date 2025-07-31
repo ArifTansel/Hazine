@@ -45,26 +45,31 @@ Peki bileşenler bu şekilde ortada bir KDC sunucusu ve kullanıcıya bir bilet 
 
 
 İletişim yapısı nasıl  kurulur ve ilerler:
-1. Kullanıcı, şifrelenmemiş kimlik bilgileriyle Authentication Server'a (AS) başvurur.
-Kullanıcı, kullanıcı adı gibi temel bilgileri ile oturum açmak istediğini bildirir. Bu aşamada parola doğrudan gönderilmez.
-2. Authentication Server (AS), iki parçadan oluşan bir yanıt oluşturur:
+- Kullanıcı, şifrelenmemiş kimlik bilgileriyle Authentication Server'a (AS) başvurur. Kullanıcı, kullanıcı adı gibi temel bilgileri ile oturum açmak istediğini bildirir. Bu aşamada parola doğrudan gönderilmez.
+- Authentication Server (AS), iki parçadan oluşan bir yanıt oluşturur:
   - Birinci parça: Kullanıcının kimliği (ID) ve bir TGS oturum anahtarı (TGS Session Key) içerir. Bu veri, kullanıcının parolasından türetilmiş gizli anahtarı (secret key) ile şifrelenir.
   - İkinci parça: Ticket Granting Ticket (TGT) adı verilen bir bilettir. Bu biletin içinde kullanıcı bilgileri ve aynı TGS oturum anahtarı bulunur ve TGS'nin gizli anahtarı ile şifrelenir.
-2. Kullanıcı, kendi gizli anahtarı ile ilk kısmın şifresini çözer ve TGS oturum anahtarını elde eder. Böylece mesajın gerçekten Authentication Server'dan geldiğini doğrular.
-TGT bileti TGS'nin gizli anahtarı ile şifrelendiği için kullanıcı bu bileti açamaz ancak olduğu gibi kullanabilir.
-3. Kullanıcı, bir servis talep etmek için TGS'ye başvurur. Bu başvuruda iki şey gönderir:
+- Kullanıcı, kendi gizli anahtarı ile ilk kısmın şifresini çözer ve TGS oturum anahtarını elde eder. Böylece mesajın gerçekten Authentication Server'dan geldiğini doğrular. TGT bileti TGS'nin gizli anahtarı ile şifrelendiği için kullanıcı bu bileti açamaz ancak olduğu gibi kullanabilir.
+- Kullanıcı, bir servis talep etmek için TGS'ye başvurur. Bu başvuruda iki şey gönderir:
   - Daha önce aldığı TGT bileti
   - Kullanıcının kimlik bilgilerini ve hedef servis adını içeren ve TGS oturum anahtarı ile şifrelenmiş bir kimlik doğrulama bilgisi (Authenticator)
 <img width="416" height="177" alt="image" src="https://github.com/user-attachments/assets/387059c9-aef7-4290-8a7b-73965780b4ef" />
-4. Ticket Granting Server (TGS), TGT biletini kendi gizli anahtarıyla açar ve içindeki bilgileri doğrular. Ardından Authenticator’ı da TGT içinden çıkan TGS oturum anahtarı ile çözer ve kullanıcı kimliğini doğrular.
-5. TGS, kullanıcının erişmek istediği servis için bir Service Ticket üretir.
+
+- Ticket Granting Server (TGS), TGT biletini kendi gizli anahtarıyla açar ve içindeki bilgileri doğrular. Ardından Authenticator’ı da TGT içinden çıkan TGS oturum anahtarı ile çözer ve kullanıcı kimliğini doğrular.
+- TGS, kullanıcının erişmek istediği servis için bir Service Ticket üretir.
   - Bu bilet, kullanıcının kimliği ve bir servis oturum anahtarı (Service Session Key) içerir.
   - Biletin bir kısmı kullanıcının anlayabileceği şekilde servis oturum anahtarı içerirken, diğer kısmı servis sağlayıcının gizli anahtarı ile şifrelenmiş bir ticket (Service Ticket) olarak hazırlanır.
-7. Kullanıcı, bu servis biletini ve kendi oluşturduğu Authenticator’ı hedef servise gönderir.
+- Kullanıcı, bu servis biletini ve kendi oluşturduğu Authenticator’ı hedef servise gönderir.
 Authenticator, yine servis oturum anahtarı ile şifrelenmiştir.
-8. Hedef servis, kendi gizli anahtarı ile servis biletini açar ve TGS tarafından oluşturulmuş bilgileri alır.
-Servis oturum anahtarı ile Authenticator’ı çözüp kimlik doğrulamasını tamamlar.
-9. Opsiyonel olarak servis, kullanıcıya bir onay mesajı göndererek kimlik doğrulamasını karşılıklı hale getirir.
+- Hedef servis, kendi gizli anahtarı ile servis biletini açar ve TGS tarafından oluşturulmuş bilgileri alır.
+Servis oturum anahtarı ile Authenticator’ı çözüp kullanıcıya tekrar session key ile şifrelenmiş mesaj gönderir
+- Kullanıcı bu şifreyi çözer ve bu şekilde karşı tarafı doğrulamış olur.
+- Sonrasındaki iletilecek mesajlar TGS ile şifrelenerek karşılıklı doğrulama ile gönderilir.
+
+Yukarıdaki yapıdaki gibi Kerberos hem Client hem Server tarafının birbirini doğrulamasını sağlayarak araya bir kişi girdiğinde hem kendini Client hem de Server olarak gösterebilmesini ve aradaki mesajları okuyabilmesini engeller.
 
 Detaylı bir anlatım için : https://www.youtube.com/watch?v=5N242XcKAsM
+
+## Çalışma : OpenSSH için bir kerberos yapısı kuralım.
+Sonra :)
 
